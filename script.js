@@ -1,3 +1,6 @@
+const betterPostLink = (link) => link.replace(/topic\/\d+\/\?page=\d#post-/, "post/")
+// Thanks to @gosoccerboy5 for the above function
+
 const valueOf = (query) => document.querySelector(query).value
 const checked = (query) => document.querySelector(query).checked
 
@@ -10,12 +13,12 @@ const subforumOptions = {
 
 async function createApplication() {
     // Function to fill in a template with proper values
-    let application = '';
-    application += `[START of application] \n`
+    let application = ''
     application += `@${valueOf('#username')} - `
 
-    let activeSubforums = [];
+    let activeSubforums = []
 
+    // Out of all the subforums, note down all the user has selected
     for (let subforum in subforumOptions) {
         if (checked(`#${subforum}`)) {
             activeSubforums.push(subforumOptions[subforum])
@@ -23,21 +26,20 @@ async function createApplication() {
     }
     application += `active in ${activeSubforums.join(", ")}. \n`
 
-    let posts = Array.from(document.querySelectorAll('.post-id'));
+    let posts = Array.from(document.querySelectorAll('.post-id'))
     posts.forEach((post, index) => {
-        posts[index] = post.value;
+        posts[index] = betterPostLink(post.value)
     })
+    posts = posts.filter(post => post.trim() !== "")
 
     application += `Most constructive posts - ${posts.join(", ")}. \n`
     application += `Most recent post: ${valueOf("#recent")}. \n`
     if (!valueOf("#additional").trim() !== "") {
         application += `Additional info: ${valueOf("#additional")}. \n`
     }
-    application += `[END of application]`
-    console.log(application)
-    document.querySelector('.result').style.display = "block";
-    document.querySelector('#result').innerText = application;
 
+    document.querySelector('.result').style.display = "block"
+    document.querySelector('#result').innerText = application
 }
 
 document.querySelector("#create").addEventListener("click", createApplication)
