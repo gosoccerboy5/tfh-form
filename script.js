@@ -33,7 +33,7 @@ async function createApplication() {
     posts = posts.filter(post => post.trim() !== "")
 
     application += `Most constructive posts - ${posts.join(", ")}. \n`
-    application += `Most recent post: ${valueOf("#recent")}. \n`
+    application += `Most recent post: ${betterPostLink(valueOf("#recent"))}. \n`
     if (!valueOf("#additional").trim() !== "") {
         application += `Additional info: ${valueOf("#additional")}. \n`
     }
