@@ -8,12 +8,13 @@ const subforumOptions = {
     suggestions: 'Suggestions',
     ats: 'Advanced Topics',
     qas: 'Questions about Scratch',
-    hws: 'Help with scripts'
+    hws: 'Help with Scripts'
 }
 
 async function createApplication() {
     // Function to fill in a template with proper values
     let application = ''
+    const username = valueOf('#username')
     application += `@${valueOf('#username')} - `
 
     let activeSubforums = []
@@ -27,9 +28,20 @@ async function createApplication() {
     application += `active in ${activeSubforums.join(", ")}. \n`
 
     let posts = Array.from(document.querySelectorAll('.post-id'))
-    posts.forEach((post, index) => {
+    for (let index = 0; index < posts.length; index++) {
+        const post = posts[index];
         posts[index] = betterPostLink(post.value)
-    })
+        if (post.value.trim() !== '') {
+            let data = await (await fetch('https://scratchdb.lefty.one/v3/forum/post/info/' + post.value.match(/\d+/))).json()
+            console.log(data)
+            if (data.username.toLowerCase() !== username.toLowerCase() || !activeSubforums.includes(data.topic.category)) {
+                alert('Oh dear! It appears one of the posts you supplied as "constructive" '
+                + 'was not in the forums you said you were most active in or not your own post.\n'
+                + 'Make sure all the posts you link are yours and fall under constructive subforums.')
+                return
+            }
+        }
+    }
     posts = posts.filter(post => post.trim() !== "")
 
     application += `Most constructive posts - ${posts.join(", ")}. \n`
