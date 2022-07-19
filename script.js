@@ -27,13 +27,12 @@ async function createApplication() {
     }
     application += `active in ${activeSubforums.join(', ')}. \n`
 
-    let posts = Array.from(document.querySelectorAll('.post-id'))
+    let posts = Array.from(document.querySelectorAll('.post-id')).filter(post => post.value.trim() !== '')
     for (let index = 0; index < posts.length; index++) {
         const post = posts[index];
         posts[index] = betterPostLink(post.value)
         if (post.value.trim() !== '') {
             let data = await (await fetch('https://scratchdb.lefty.one/v3/forum/post/info/' + post.value.match(/\d+/))).json()
-            console.log(data)
             if (data.username.toLowerCase() !== username.toLowerCase() || !activeSubforums.includes(data.topic.category)) {
                 alert('Oh dear! It appears one of the posts you supplied as "constructive" '
                 + 'was not in the forums you said you were most active in or not your own post.\n'
@@ -42,10 +41,25 @@ async function createApplication() {
             }
         }
     }
-    posts = posts.filter(post => post.trim() !== '')
+    if (posts.length <= 1) {
+        alert('Oh dear! It appears you did not supply enough constructive posts. Please add more.')
+        return
+    }
 
     application += `Most constructive posts - ${posts.join(', ')}. \n`
-    application += `Most recent post: ${betterPostLink(valueOf('#recent'))}. \n`
+
+    let recentPost = betterPostLink(valueOf('#recent'))
+    try {
+        let RPdata = await (await fetch('https://scratchdb.lefty.one/v3/forum/post/info/' + recentPost.match(/\d+/))).json();
+        if (RPdata.username.toLowerCase() !== username.toLowerCase()) {
+            alert('Oh dear! It appears the most recent post you supplied wasn\'t your own post.')
+            return
+        }
+    } catch {
+        alert('Oh dear! It appears the most recent post you supplied wasn\'t valid or didn\'t exist.')
+        return
+    }
+    application += `Most recent post: ${recentPost}. \n`
     if (!valueOf('#additional').trim() !== '') {
         application += `Additional info: ${valueOf('#additional')}. \n`
     }
