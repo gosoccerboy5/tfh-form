@@ -1,0 +1,64 @@
+body {
+    background-color: #121212;
+    color: #c4c4c4;
+    font-family: Arial, sans-serif;
+    padding: 15px;
+}
+
+.form {
+    border: 1px solid yellow;
+    padding-left: 10px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+
+.posts {
+    padding-top: 5px;
+}
+
+.post {
+    font-family: Arial, sans-serif;
+    width: 280px;
+    color: #c4c4c4;
+    background-color: #272727;
+    border: 2px solid #575656;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.form-desc {
+    font-weight: bold;
+}
+
+.small {
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input[type=checkbox] {
+    cursor: pointer;
+}
+
+#create {
+    font-family: Arial, sans-serif;
+    color: #c4c4c4;
+    background-color: #272727;
+    border: 2px solid #575656;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0.3em 0.5em;
+}
+
+#result {
+    max-width: 500px;
+    font-family: monospace;
+    border: 3px solid green;
+    padding: 1em;
+}
