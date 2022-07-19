@@ -1,4 +1,4 @@
-const betterPostLink = (link) => link.replace(/topic\/\d+\/\?page=\d#post-/, "post/")
+const betterPostLink = (link) => link.replace(/topic\/\d+\/\?page=\d#post-/, 'post/')
 // Thanks to @gosoccerboy5 for the above function
 
 const valueOf = (query) => document.querySelector(query).value
@@ -25,7 +25,7 @@ async function createApplication() {
             activeSubforums.push(subforumOptions[subforum])
         }
     }
-    application += `active in ${activeSubforums.join(", ")}. \n`
+    application += `active in ${activeSubforums.join(', ')}. \n`
 
     let posts = Array.from(document.querySelectorAll('.post-id'))
     for (let index = 0; index < posts.length; index++) {
@@ -42,16 +42,16 @@ async function createApplication() {
             }
         }
     }
-    posts = posts.filter(post => post.trim() !== "")
+    posts = posts.filter(post => post.trim() !== '')
 
-    application += `Most constructive posts - ${posts.join(", ")}. \n`
-    application += `Most recent post: ${betterPostLink(valueOf("#recent"))}. \n`
-    if (!valueOf("#additional").trim() !== "") {
-        application += `Additional info: ${valueOf("#additional")}. \n`
+    application += `Most constructive posts - ${posts.join(', ')}. \n`
+    application += `Most recent post: ${betterPostLink(valueOf('#recent'))}. \n`
+    if (!valueOf('#additional').trim() !== '') {
+        application += `Additional info: ${valueOf('#additional')}. \n`
     }
 
-    document.querySelector('.result').style.display = "block"
+    document.querySelector('.result').style.display = 'block'
     document.querySelector('#result').innerText = application
 }
 
-document.querySelector("#create").addEventListener("click", createApplication)
+document.querySelector('#create').addEventListener('click', createApplication)
